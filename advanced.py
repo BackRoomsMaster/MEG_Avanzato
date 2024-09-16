@@ -254,12 +254,12 @@ def gestisci_personale(campo):
             campo.mostra_sopravvissuti()
             indice = int(input("Seleziona il numero del sopravvissuto da rimuovere dalle guardie: ")) - 1
             campo.rimuovi_guardia(indice)
-  elif scelta == "5":
-              break
-          else:
-              print("Scelta non valida.")
+        elif scelta == "5":
+            break
+        else:
+            print("Scelta non valida.")
   
-  def passa_giorno(campo):
+def passa_giorno(campo):
       campo.giorno += 1
       print("Passaggio al giorno successivo...")
       
@@ -305,14 +305,14 @@ def gestisci_personale(campo):
           campo.risorse = 100 + capacita_extra
           print(f"A causa della limitata capacità di stoccaggio, {risorse_perse} risorse sono andate perse.")
   
-  def mostra_menu():
+def mostra_menu():
       print("\nMEG OMEGA 2.0 - Menu Azioni")
       print("1. Gestisci personale")
       print("2. Gestisci risorse")
       print("3. Passa al giorno successivo")
       print("4. Mostra stato del campo")
       print("5. Esci dal gioco")
-  def gestisci_risorse(campo):
+def gestisci_risorse(campo):
       while True:
           print("\nGestione Risorse")
           print(f"Risorse disponibili: {campo.risorse}")
@@ -354,9 +354,8 @@ def gestisci_personale(campo):
           else:
               print("Scelta non valida.")
   
-  def main():
+def main():
       campo = CampoBase()
-      
       while True:
           campo.mostra_stato()
           mostra_menu()
