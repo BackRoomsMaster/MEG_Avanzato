@@ -99,7 +99,7 @@ class CampoBase:
         for guardia in self.guardie:
             guardia.resistenza = max(1, guardia.resistenza - 1)
             guardia.agilita = max(1, guardia.agilita - 1)
-def esegui_compiti(self):
+    def esegui_compiti(self):
         risorse_generate = 0
         for sopravvissuto in self.sopravvissuti:
             if sopravvissuto.compito == "Raccolta Risorse":
