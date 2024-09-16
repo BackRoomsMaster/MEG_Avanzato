@@ -355,25 +355,26 @@ def gestisci_risorse(campo):
               print("Scelta non valida.")
   
 def main():
-      campo = CampoBase()
-      while True:
-          campo.mostra_stato()
-          mostra_menu()
-          scelta = input("Seleziona un'azione (1-5): ")
-  
-          if scelta == "1":
-              gestisci_personale(campo)
-          elif scelta == "2":
-              gestisci_risorse(campo)
-          elif scelta == "3":
-              passa_giorno(campo)
-          elif scelta == "4":
-              campo.mostra_stato()
-          elif scelta == "5":
-              print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
-              break
-          else:
-              print("Opzione non valida. Per favore, scegli un numero tra 1 e 5.")
+    campo = CampoBase()
+    
+    while True:
+        campo.mostra_stato()
+        mostra_menu()
+        scelta = input("Seleziona un'azione (1-5): ")
+
+        if scelta == "1":
+            gestisci_personale(campo)
+        elif scelta == "2":
+            gestisci_risorse(campo)
+        elif scelta == "3":
+            passa_giorno(campo)
+        elif scelta == "4":
+            campo.mostra_stato()
+        elif scelta == "5":
+            print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
+            break
+        else:
+            print("Opzione non valida. Per favore, scegli un numero tra 1 e 5.")
+
 if __name__ == "__main__":
-main()
-                
+    main()
