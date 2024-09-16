@@ -374,7 +374,6 @@ def main():
               break
           else:
               print("Opzione non valida. Per favore, scegli un numero tra 1 e 5.")
-  
-  if __name__ == "__main__":
-      main()
+if __name__ == "__main__":
+main()
                 
