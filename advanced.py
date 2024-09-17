@@ -1,6 +1,7 @@
 import random
 import os
 import importlib
+from dlc import miglioramenti_tecnici
 
 class Mostro:
     def __init__(self, livello):
@@ -312,10 +313,11 @@ def mostra_menu():
     print("1. Gestisci personale")
     print("2. Gestisci risorse")
     print("3. Esplorazione avanzata")
-    print("4. Diplomazia")  # Nuova opzione
+    print("4. Diplomazia")
     print("5. Passa al giorno successivo")
     print("6. Mostra stato del campo")
-    print("7. Esci dal gioco")
+    print("7. Impostazioni effetti visivi")  # Nuova opzione
+    print("8. Esci dal gioco")
 def gestisci_risorse(campo):
       while True:
           print("\nGestione Risorse")
@@ -376,20 +378,26 @@ def carica_dlc():
 def main():
     campo = CampoBase()
     dlc_modules = carica_dlc()
-
+    
+    # Inizializza i DLC
     for dlc in dlc_modules:
         if hasattr(dlc, 'inizializza_dlc'):
             dlc.inizializza_dlc(campo)
     
+    # Applica i miglioramenti tecnici
+    miglioramenti_tecnici.sostituisci_funzioni(campo)
+    
     while True:
+        if campo.usa_effetti_visivi:
+            miglioramenti_tecnici.caricamento(messaggio="Aggiornamento stato del campo")
         campo.mostra_stato()
         mostra_menu()
-        scelta = input("Seleziona un'azione (1-7): ")
+        scelta = input("Seleziona un'azione (1-8): ")
 
         if scelta == "1":
-            gestisci_personale(campo)
+            campo.gestisci_personale()
         elif scelta == "2":
-            gestisci_risorse(campo)
+            campo.gestisci_risorse()
         elif scelta == "3":
             for dlc in dlc_modules:
                 if hasattr(dlc, 'menu_esplorazione'):
@@ -401,17 +409,19 @@ def main():
                     dlc.menu_diplomazia(campo)
                     break
         elif scelta == "5":
-            passa_giorno(campo)
-            for dlc in dlc_modules:
-                if hasattr(dlc, 'esegui_azioni_giornaliere'):
-                    dlc.esegui_azioni_giornaliere(campo)
+            campo.passa_giorno()
         elif scelta == "6":
             campo.mostra_stato()
         elif scelta == "7":
-            print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
+            miglioramenti_tecnici.menu_effetti_visivi(campo)
+        elif scelta == "8":
+            if campo.usa_effetti_visivi:
+                miglioramenti_tecnici.stampa_lenta("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
+            else:
+                print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
             break
         else:
-            print("Opzione non valida. Per favore, scegli un numero tra 1 e 7.")
+            print("Opzione non valida. Per favore, scegli un numero tra 1 e 8.")
 
 if __name__ == "__main__":
     main()
