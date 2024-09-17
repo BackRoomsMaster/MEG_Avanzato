@@ -1,7 +1,6 @@
 import random
 import os
 import importlib
-from dlc import miglioramenti_tecnici
 
 class Mostro:
     def __init__(self, livello):
@@ -317,7 +316,6 @@ def mostra_menu():
     print("5. Esplora livelli estremi")  # Nuova opzione
     print("6. Passa al giorno successivo")
     print("7. Mostra stato del campo")
-    print("8. Impostazioni effetti visivi")
     print("9. Esci dal gioco")
 def gestisci_risorse(campo):
       while True:
@@ -413,11 +411,6 @@ def main():
             campo.passa_giorno()
         elif scelta == "7":
             campo.mostra_stato()
-        elif scelta == "8":
-            for dlc in dlc_modules:
-                if hasattr(dlc, 'menu_effetti_visivi'):
-                    dlc.menu_effetti_visivi(campo)
-                    break
         elif scelta == "9":
             print("Grazie per averci scelto!")
             break
