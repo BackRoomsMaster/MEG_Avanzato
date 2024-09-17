@@ -314,10 +314,11 @@ def mostra_menu():
     print("2. Gestisci risorse")
     print("3. Esplorazione avanzata")
     print("4. Diplomazia")
-    print("5. Passa al giorno successivo")
-    print("6. Mostra stato del campo")
-    print("7. Impostazioni effetti visivi")  # Nuova opzione
-    print("8. Esci dal gioco")
+    print("5. Esplora livelli estremi")  # Nuova opzione
+    print("6. Passa al giorno successivo")
+    print("7. Mostra stato del campo")
+    print("8. Impostazioni effetti visivi")
+    print("9. Esci dal gioco")
 def gestisci_risorse(campo):
       while True:
           print("\nGestione Risorse")
@@ -384,15 +385,10 @@ def main():
         if hasattr(dlc, 'inizializza_dlc'):
             dlc.inizializza_dlc(campo)
     
-    # Applica i miglioramenti tecnici
-    miglioramenti_tecnici.sostituisci_funzioni(campo)
-    
     while True:
-        if campo.usa_effetti_visivi:
-            miglioramenti_tecnici.caricamento(messaggio="Aggiornamento stato del campo")
         campo.mostra_stato()
         mostra_menu()
-        scelta = input("Seleziona un'azione (1-8): ")
+        scelta = input("Seleziona un'azione (1-9): ")
 
         if scelta == "1":
             campo.gestisci_personale()
@@ -409,19 +405,24 @@ def main():
                     dlc.menu_diplomazia(campo)
                     break
         elif scelta == "5":
-            campo.passa_giorno()
+            for dlc in dlc_modules:
+                if hasattr(dlc, 'menu_livelli_estremi'):
+                    dlc.menu_livelli_estremi(campo)
+                    break
         elif scelta == "6":
-            campo.mostra_stato()
+            campo.passa_giorno()
         elif scelta == "7":
-            miglioramenti_tecnici.menu_effetti_visivi(campo)
+            campo.mostra_stato()
         elif scelta == "8":
-            if campo.usa_effetti_visivi:
-                miglioramenti_tecnici.stampa_lenta("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
-            else:
-                print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
+            for dlc in dlc_modules:
+                if hasattr(dlc, 'menu_effetti_visivi'):
+                    dlc.menu_effetti_visivi(campo)
+                    break
+        elif scelta == "9":
+            print("Grazie per averci scelto!")
             break
         else:
-            print("Opzione non valida. Per favore, scegli un numero tra 1 e 8.")
+            print("Opzione non valida. Per favore, scegli un numero tra 1 e 9.")
 
 if __name__ == "__main__":
     main()
