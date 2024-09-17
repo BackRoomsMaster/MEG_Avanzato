@@ -1,4 +1,6 @@
 import random
+import os
+import importlib
 
 class Mostro:
     def __init__(self, livello):
@@ -353,9 +355,29 @@ def gestisci_risorse(campo):
               break
           else:
               print("Scelta non valida.")
-  
+def carica_dlc():
+    dlc_folder = 'dlc'
+    dlc_modules = []
+    
+    if os.path.exists(dlc_folder):
+        for filename in os.listdir(dlc_folder):
+            if filename.endswith('.py'):
+                module_name = filename[:-3]  # Rimuove '.py'
+                try:
+                    module = importlib.import_module(f'dlc.{module_name}')
+                    dlc_modules.append(module)
+                    print(f"DLC caricato: {module_name}")
+                except ImportError as e:
+                    print(f"Errore nel caricamento del DLC {module_name}: {e}")
+    
+    return dlc_modules  
 def main():
     campo = CampoBase()
+    dlc_modules = carica_dlc()
+
+    for dlc in dlc_modules:
+        if hasattr(dlc, 'inizializza_dlc'):
+            dlc.inizializza_dlc(campo)
     
     while True:
         campo.mostra_stato()
@@ -368,6 +390,9 @@ def main():
             gestisci_risorse(campo)
         elif scelta == "3":
             passa_giorno(campo)
+            for dlc in dlc_modules:
+                if hasattr(dlc, 'esegui_azioni_giornaliere'):
+                    dlc.esegui_azioni_giornaliere(campo)
         elif scelta == "4":
             campo.mostra_stato()
         elif scelta == "5":
