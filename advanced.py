@@ -308,13 +308,14 @@ def passa_giorno(campo):
           print(f"A causa della limitata capacità di stoccaggio, {risorse_perse} risorse sono andate perse.")
   
 def mostra_menu():
-      print("\nMEG OMEGA 2.0 - Menu Azioni")
-      print("1. Gestisci personale")
-      print("2. Gestisci risorse")
-      print("3. Esplorazione avanzata")  
-      print("4. Passa al giorno successivo")
-      print("5. Mostra stato del campo")
-      print("6. Esci dal gioco")
+    print("\nMEG OMEGA 2.0 - Menu Azioni")
+    print("1. Gestisci personale")
+    print("2. Gestisci risorse")
+    print("3. Esplorazione avanzata")
+    print("4. Diplomazia")  # Nuova opzione
+    print("5. Passa al giorno successivo")
+    print("6. Mostra stato del campo")
+    print("7. Esci dal gioco")
 def gestisci_risorse(campo):
       while True:
           print("\nGestione Risorse")
@@ -383,7 +384,7 @@ def main():
     while True:
         campo.mostra_stato()
         mostra_menu()
-        scelta = input("Seleziona un'azione (1-5): ")
+        scelta = input("Seleziona un'azione (1-7): ")
 
         if scelta == "1":
             gestisci_personale(campo)
@@ -395,17 +396,22 @@ def main():
                     dlc.menu_esplorazione(campo)
                     break
         elif scelta == "4":
+            for dlc in dlc_modules:
+                if hasattr(dlc, 'menu_diplomazia'):
+                    dlc.menu_diplomazia(campo)
+                    break
+        elif scelta == "5":
             passa_giorno(campo)
             for dlc in dlc_modules:
                 if hasattr(dlc, 'esegui_azioni_giornaliere'):
                     dlc.esegui_azioni_giornaliere(campo)
-        elif scelta == "5":
-            campo.mostra_stato()
         elif scelta == "6":
+            campo.mostra_stato()
+        elif scelta == "7":
             print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
             break
         else:
-            print("Opzione non valida. Per favore, scegli un numero tra 1 e 6.")
+            print("Opzione non valida. Per favore, scegli un numero tra 1 e 7.")
 
 if __name__ == "__main__":
     main()
