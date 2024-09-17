@@ -58,7 +58,7 @@ def lost_memories():
         if choice == '1':
             run_program('inducedfear.py')
         elif choice == '2':
-            level_theta()
+            run_program('theta.py')
         elif choice == '3':
             print("Grazie per aver usato il Sistema di Gestione Memorie. Arrivederci!")
             break
