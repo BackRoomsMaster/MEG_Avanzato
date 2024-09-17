@@ -311,9 +311,10 @@ def mostra_menu():
       print("\nMEG OMEGA 2.0 - Menu Azioni")
       print("1. Gestisci personale")
       print("2. Gestisci risorse")
-      print("3. Passa al giorno successivo")
-      print("4. Mostra stato del campo")
-      print("5. Esci dal gioco")
+      print("3. Esplorazione avanzata")  
+      print("4. Passa al giorno successivo")
+      print("5. Mostra stato del campo")
+      print("6. Esci dal gioco")
 def gestisci_risorse(campo):
       while True:
           print("\nGestione Risorse")
@@ -389,17 +390,22 @@ def main():
         elif scelta == "2":
             gestisci_risorse(campo)
         elif scelta == "3":
+            for dlc in dlc_modules:
+                if hasattr(dlc, 'menu_esplorazione'):
+                    dlc.menu_esplorazione(campo)
+                    break
+        elif scelta == "4":
             passa_giorno(campo)
             for dlc in dlc_modules:
                 if hasattr(dlc, 'esegui_azioni_giornaliere'):
                     dlc.esegui_azioni_giornaliere(campo)
-        elif scelta == "4":
-            campo.mostra_stato()
         elif scelta == "5":
+            campo.mostra_stato()
+        elif scelta == "6":
             print("Grazie per aver giocato a MEG OMEGA 2.0. Arrivederci!")
             break
         else:
-            print("Opzione non valida. Per favore, scegli un numero tra 1 e 5.")
+            print("Opzione non valida. Per favore, scegli un numero tra 1 e 6.")
 
 if __name__ == "__main__":
     main()
